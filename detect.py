@@ -42,12 +42,16 @@ def init_config():
 def send_file(save_name):
     upload_url = config['dashboard']['url']
     file = {'video_file': ('save_name', open(save_name, 'rb'))}
-    response = requests.post(upload_url, files=file)
-    if response.status_code == 200:
-        logging.debug(f'File {save_name} uploaded to {upload_url}')
-    else:
-        logging.error('Error occured during uploading')
-    # delete the file
+    try:
+        response = requests.post(upload_url, files=file)
+        if response.status_code == 200:
+            logging.debug(f'File {save_name} uploaded to {upload_url}')
+        else:
+            logging.error('Wrong status code')
+    except requests.exceptions.ConnectionError as err:
+        logging.error('Could not upload file')
+
+    # cleanup, delete the file
     os.remove(save_name)
     logging.debug(f'Deleting file {save_name}')
 
