@@ -209,9 +209,9 @@ if __name__ == '__main__':
         logging.error("Error opening video file")
         exit(1)
     else:
-        logging.debug("Capture started")
+        logging.info("Capture started")
         main_loop(cap)
 
-    logging.debug("Capture stopped")
+    logging.info("Capture stopped")
     cap.release()
     cv2.destroyAllWindows()
