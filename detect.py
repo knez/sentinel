@@ -5,7 +5,7 @@ import argparse
 import logging
 import requests
 import yaml
-from datetime import datetime as dt
+import datetime
 
 
 # init mobilenet SSD settings
@@ -74,7 +74,8 @@ def detect_kind(frame):
 
 
 def create_save_name(cap):
-    save_name = 'video-' + dt.now().strftime('%Y%m%d-%H%M%S') + '.mp4'
+    date_now = datetime.datetime.now().strftime('%Y%m%d-%H%M%S')
+    save_name = 'video-' + date_now + '.mp4'
     # get the video frame height and width
     frame_width = int(cap.get(3))
     frame_height = int(cap.get(4))
