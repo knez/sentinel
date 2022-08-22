@@ -6,6 +6,7 @@ import logging
 import requests
 import yaml
 import datetime
+import time
 
 
 # init mobilenet SSD settings
@@ -51,10 +52,6 @@ def send_file(save_name):
     except requests.exceptions.ConnectionError as err:
         logging.error('Could not upload file')
 
-    # cleanup, delete the file
-    os.remove(save_name)
-    logging.debug(f'Deleting file {save_name}')
-
 
 def detect_kind(frame):
     frame_blob = cv2.dnn.blobFromImage(cv2.resize(frame, RESIZED_DIMENSIONS), 
@@ -75,6 +72,16 @@ def detect_kind(frame):
             return label         
         else:
             return 'unknown'
+
+
+def embed_metadata(filename, meta):
+    f = open(filename, 'ab')
+    data = b'w00tw00t' + ','.join(meta).encode()
+    if f.write(data) == len(data):
+        logging.debug('Embedded metadata into ' + filename)
+    else:
+        logging.debug('Failed to embed data into ' + filename)
+    f.close()
 
 
 def create_save_name(cap):
@@ -163,7 +170,7 @@ def main_loop(cap):
                     cv2.rectangle(frame, (x, y), (x+w, y+h), (0, 255, 0), 2)
 
                 if movement and not is_capturing:
-                    save_name, out = create_save_name(cap)
+                    filename, out = create_save_name(cap)
                     out.write(orig_frame)
                     is_capturing = True
                 elif is_capturing:
@@ -173,14 +180,19 @@ def main_loop(cap):
                         # wait a little before detecting
                         if i == cap_frames - 25: 
                             kind = detect_kind(frame)
+                            metadata = (str(int(time.time())), kind, location)
                             logging.info(f"Detected new object: {kind}, location: {location}")
                     else:
                         is_capturing = False
                         i = cap_frames
-                        send_file(save_name)
+                        out.release()
+                        embed_metadata(filename, metadata)
+                        send_file(filename)
+                        os.remove(filename)
+                        logging.debug(f'Deleting file {filename}')
 
                 if args['debug']:
-                    cv2.imshow('Detected Objects', frame)
+                    cv2.imshow('SENTINEL', frame)
                 if cv2.waitKey(100) & 0xFF == ord('q'):
                     break
         else:
