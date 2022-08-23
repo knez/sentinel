@@ -42,7 +42,8 @@ def init_config():
 # upload file to configured dashboard
 def send_file(save_name):
     upload_url = config['dashboard']['url']
-    file = {'video_file': ('save_name', open(save_name, 'rb'))}
+    f = open(save_name, 'rb')
+    file = {'video_file': ('save_name', f)}
     try:
         response = requests.post(upload_url, files=file)
         if response.status_code == 200:
@@ -51,6 +52,7 @@ def send_file(save_name):
             logging.error('Wrong status code')
     except requests.exceptions.ConnectionError as err:
         logging.error('Could not upload file')
+    f.close()
 
 
 def detect_kind(frame):
