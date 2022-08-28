@@ -13,6 +13,17 @@ def index():
 def dashboard():
     return render_template('dashboard.html', name=current_user.name)
 
+# Define API endpoints
+@main.route('/api/update', methods=['POST'])
+def update():
+    # TODO
+    return ''
+
+@main.route('/api/delete')
+def delete():
+    # TODO
+    return ''
+
 @main.route('/api/upload', methods=['POST'])
 def upload():
     # TODO
