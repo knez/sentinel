@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="sidenav">
+    <a href="/dashboard">Dashboard</a>
+    <a href="/dashboard/notifications" class="notifications">Notification&nbsp;Settings</a>
+    <a href="/logout">Logout</a>
+  </div>
+
+  <form action="update" method="POST">
+    <div class="fields">
+      <span>Enabled</span>
+      <div class="slider-container">
+        <label class="switch">
+          <input type="checkbox" />
+          <span class="slider round"></span>
+        </label>
+      </div>
+    </div>
+
+    <div class="fields">
+      <label for="email">E-Mail</label>
+      <input type="email" placeholder="Enter E-Mail" name="email" required />
+    </div>
+
+    <button type="submit">Update</button>
+  </form>
+{% endblock %}

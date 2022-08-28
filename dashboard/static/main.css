@@ -57,6 +57,7 @@ form {
   max-width: 30em;
   display: flex;
   flex-direction: column;
+  position: relative;
 }
 
 h1 {
@@ -331,11 +332,16 @@ ul > li > span > button.play:hover {
 .notification {
   background-color: whitesmoke;
   border-radius: 4px;
-  position: relative;
+  position: absolute;
+  left: 0px;
+  top: 220px;
   padding: 1.25rem 2.5rem 1.25rem 1.5rem;
+  width: 100%;
+  text-align: center;
 }
 
 .notification.is-danger {
+  border: solid 3px #f14668;
   background-color: #f14668;
   color: #fff;
 }
