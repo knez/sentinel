@@ -13,17 +13,16 @@ def login():
 @auth.route('/login', methods=['POST'])
 def login_post():
     # login code goes here
-    # email = request.form.get('email')
-    # password = request.form.get('password')
-    # remember = True if request.form.get('remember') else False
+    username = request.form.get('uname')
+    password = request.form.get('psw')
 
-    # user = User.query.filter_by(email=email).first()
+    user = User.query.filter_by(name=username).first()
 
-    # if not user or not check_password_hash(user.password, password):
-    #     flash('Please check your login details and try again.')
-    #     return redirect(url_for('auth.login')) # if the user doesn't exist or password is wrong, reload the page
+    if not user or not check_password_hash(user.password, password):
+        flash('Please check your login details and try again.')
+        return redirect(url_for('auth.login'))
 
-    login_user('hacker', remember=remember)
+    login_user(user)
     return redirect(url_for('main.dashboard'))
 
 @auth.route('/signup')
