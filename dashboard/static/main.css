@@ -345,3 +345,9 @@ ul > li > span > button.play:hover {
   background-color: #f14668;
   color: #fff;
 }
+
+.notification.is-success {
+  border: solid 3px #48c78e;
+  background-color: #48c78e;
+  color: #fff;
+}

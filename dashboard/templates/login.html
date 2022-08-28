@@ -20,12 +20,17 @@
   <button type="submit">Login</button>
   {% with messages = get_flashed_messages() %}
   {% if messages %}
+      {% if 'success' not in messages[0].lower() %}
       <div class="notification is-danger">
           {{ messages[0] }}
       </div>
+      {% else %}
+      <div class="notification is-success">
+        {{ messages[0] }}
+      </div>
+      {% endif %}
   {% endif %}
   {% endwith %}
 </form>
-
 
 {% endblock %}
