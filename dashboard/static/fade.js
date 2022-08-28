@@ -6,4 +6,4 @@ setTimeout(function() {
         col.style.opacity = '0';
         col.style.visibility = 'hidden';
     }
-  }, 2000)
+  }, 1500)
