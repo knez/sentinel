@@ -327,3 +327,15 @@ ul > li > span > button.play:hover {
   text-decoration: none;
   cursor: pointer;
 }
+
+.notification {
+  background-color: whitesmoke;
+  border-radius: 4px;
+  position: relative;
+  padding: 1.25rem 2.5rem 1.25rem 1.5rem;
+}
+
+.notification.is-danger {
+  background-color: #f14668;
+  color: #fff;
+}
