@@ -1,7 +1,75 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1 class="title">
-    Welcome, {{ name }}!
-</h1>
+
+<script src="static/modal.js" defer></script>
+
+<div class="sidenav">
+  <a href="#dashboard" class="dashboard">Dashboard</a>
+  <a href="#notifications">Notification&nbsp;Settings</a>
+  <a href="/logout">Logout</a>
+</div>
+
+<ul class="main">
+  <li><h2>Dashboard</h2></li>
+  <li>
+    <ul>
+      <li class="first">
+        <span class="id">ID</span>
+        <span class="date">Date</span>
+        <span class="type">Type</span>
+        <span class="position">Position</span>
+        <span class="video">Video</span>
+        <span class="delete"></span>
+      </li>
+      <li class="diff-row">
+        <span class="id">1</span>
+        <span class="date">14.5.2020</span>
+        <span class="type">Animal</span>
+        <span class="position">Top Left</span>
+        <span class="video"><button id="video-1" class="play">Play</button></span>
+        <span class="delete"><a href="#url" target="_blank">Delete</a></span>
+      </li>
+      <li>
+        <span class="id">2</span>
+        <span class="date">21.5.2022</span>
+        <span class="type">Human</span>
+        <span class="position">Center</span>
+        <span class="video"><button id="video-2" class="play">Play</button></span>
+        <span class="delete"><a href="#url" target="_blank">Delete</a></span>
+      </li>
+      <li class="diff-row">
+        <span class="id">3</span>
+        <span class="date">24.6.2022</span>
+        <span class="type">Human</span>
+        <span class="position">Bottom Left</span>
+        <span class="video"><button id="video-3" class="play">Play</button></span>
+        <span class="delete"><a href="#url" target="_blank">Delete</a></span>
+      </li>
+      <li>
+        <span class="id">4</span>
+        <span class="date">26.6.2022</span>
+        <span class="type">Unknown</span>
+        <span class="position">Top Right</span>
+        <span class="video"><button id="video-4" class="play">Play</button></span>
+        <span class="delete"><a href="#url" target="_blank">Delete</a></span>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<!-- The Modal -->
+<div id="myModal" class="modal">
+
+  <!-- Modal content -->
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <video width="540" height="480" controls>
+      <source src="3dsine.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+  </div>
+
+</div>
+
 {% endblock %}
