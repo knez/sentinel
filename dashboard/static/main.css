@@ -122,6 +122,8 @@ ul {
 
 ul.main {
   border: none !important;
+  position: absolute;
+  top: 50px;
 }
 
 ul > li {
@@ -350,4 +352,10 @@ ul > li > span > button.play:hover {
   border: solid 3px #48c78e;
   background-color: #48c78e;
   color: #fff;
+}
+
+.empty {
+  font-size: 250%;
+  font-weight: 600;
+  color: #ccc;
 }

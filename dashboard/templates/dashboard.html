@@ -10,6 +10,9 @@
   <a href="/logout">Logout</a>
 </div>
 
+{% if videos|length < 1 %}
+  <h1 class="empty">Database empty</h1>
+{% else %}
 <ul class="main">
   <li><h2>Dashboard</h2></li>
   <li>
@@ -49,5 +52,6 @@
   </div>
 
 </div>
+{% endif %}
 
 {% endblock %}
