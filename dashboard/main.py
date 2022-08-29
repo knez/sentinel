@@ -42,10 +42,3 @@ def delete(id):
     Video.query.filter(Video.id == id).delete()
     db.session.commit()
     return redirect(url_for('main.dashboard'))
-
-
-# Define upload API endpoint
-@main.route('/api/upload', methods=['POST'])
-def upload():
-    # TODO
-    return 'Uploaded successfully'
