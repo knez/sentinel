@@ -19,10 +19,10 @@ neural_network = cv2.dnn.readNetFromCaffe('trained_model/MobileNetSSD_deploy.pro
 
 # neural network classes to identify
 classes =  [
-            "background", "aeroplane", "bicycle", "bird", "boat", "bottle", 
-            "bus", "car", "cat", "chair", "cow", 
-            "diningtable",  "dog", "horse", "motorbike", "person", 
-            "pottedplant", "sheep", "sofa", "train", "tvmonitor"
+            "Background", "Aeroplane", "Bicycle", "Bird", "Boat", "Bottle", 
+            "Bus", "Car", "Cat", "Chair", "Cow", 
+            "Diningtable",  "Dog", "Horse", "Motorbike", "Person", 
+            "Pottedplant", "Sheep", "Sofa", "Train", "TVMonitor"
 ]
 
 # stores sentinel main settings
@@ -108,14 +108,14 @@ def detect_location(x, y, cap):
     h = int(cap.get(4))
 
     if x < w/2 and y > h/2:
-        return 'bottom-left'
+        return 'Bottom Left'
     if x < w/2 and y < h/2:
-        return 'top-left'
+        return 'Top Left'
     if x >= w/2 and y > h/2:
-        return 'bottom-right'
+        return 'Bottom Right'
     if x >= w/2 and y < h/2:
-        return 'top-right'  
-    return 'unknown'
+        return 'Top Right'  
+    return 'Unknown'
 
 
 def main_loop(cap):
