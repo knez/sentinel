@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, redirect, url_for, request
 from flask_login import login_required, current_user
-from .models import User
+from .models import User, Video
 from . import db
 
 main = Blueprint('main', __name__)
@@ -12,7 +12,8 @@ def index():
 @main.route('/dashboard')
 @login_required
 def dashboard():
-    return render_template('dashboard.html')
+    videos = Video.query.all()
+    return render_template('dashboard.html', videos=videos)
 
 @main.route('/dashboard/notifications')
 @login_required
