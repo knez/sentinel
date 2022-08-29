@@ -1,4 +1,5 @@
 import os
+import hashlib
 from flask import Blueprint, current_app, request
 from werkzeug.utils import secure_filename
 from .models import Video
@@ -13,7 +14,18 @@ def upload():
     if not file:
         return 'Error: no data received'
 
+    signature = request.headers.get('Signature')
+    if not signature:
+        return 'Error: file is not signed'
+
     blob = file.read()
+    # verify signature
+    secret_key = current_app.config['SECRET_KEY'].encode()
+    sha256 = hashlib.sha256(secret_key + blob)
+    print(sha256.hexdigest())
+    if sha256.hexdigest() != signature:
+        return 'Error: signature verification failed'
+
     # search for magic number where metadata are stored
     ofs = blob.rfind(b'w00tw00t')
     if ofs < 0:
