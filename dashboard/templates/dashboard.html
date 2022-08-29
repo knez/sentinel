@@ -32,7 +32,9 @@
         <span class="type">{{ v.kind }}</span>
         <span class="position">{{ v.position }}</span>
         <span class="video"><button onclick="activateModal('mod{{ v.id }}')" class="play">Play</button></span>
-        <span class="delete"><a href="#url" target="_blank">Delete</a></span>
+        <span class="delete"><a href="/dashboard/delete/{{ v.id }}" 
+          onclick="return confirm('Are you sure?')">Delete</a>
+        </span>
       </li>
       {% endfor %}
     </ul>

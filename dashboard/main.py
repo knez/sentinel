@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, redirect, url_for, request
+from flask import Blueprint, render_template, flash, redirect, url_for, request
 from flask_login import login_required, current_user
 from .models import User, Video
 from . import db
@@ -34,6 +34,14 @@ def notifications_update():
     db.session.add(user)
     db.session.commit()
     return redirect(url_for('main.notifications'))
+
+
+@main.route('/dashboard/delete/<int:id>')
+@login_required
+def delete(id):
+    Video.query.filter(Video.id == id).delete()
+    db.session.commit()
+    return redirect(url_for('main.dashboard'))
 
 
 # Define upload API endpoint
