@@ -1,4 +1,5 @@
-from flask import Blueprint, render_template, flash, redirect, url_for, request
+import os
+from flask import Blueprint, render_template, flash, redirect, url_for, request, current_app
 from flask_login import login_required, current_user
 from .models import User, Video
 from . import db
@@ -35,6 +36,9 @@ def notifications_update():
 @main.route('/dashboard/delete/<int:id>')
 @login_required
 def delete(id):
-    Video.query.filter(Video.id == id).delete()
+    filename = Video.query.get(id).filename
+    Video.query.filter(id==id).delete()
     db.session.commit()
+    save_path = os.path.join(current_app.config['UPLOAD_FOLDER'], filename)
+    os.unlink(save_path)
     return redirect(url_for('main.dashboard'))
