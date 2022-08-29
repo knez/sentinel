@@ -1,6 +1,6 @@
 import os
 import hashlib
-from flask import Blueprint, current_app, request
+from flask import Blueprint, current_app, request, Response
 from werkzeug.utils import secure_filename
 from .models import Video
 from . import db
@@ -12,15 +12,15 @@ api = Blueprint('api', __name__)
 def upload():
     file = request.files.get('data')
     if not file:
-        return 'Error: no data received'
+        return Response('No data received', status=400)
 
     signature = request.headers.get('Signature')
     if not signature:
-        return 'Error: file is not signed'
+        return Response('File is not signed', status=400)
 
     blob = file.read()
     if not verify_signature(blob, signature):
-        return 'Error: signature verification failed'
+        return Response('Signature verification failed', status=403)
 
     # search for magic number where metadata are stored
     ofs = blob.rfind(b'w00tw00t')
@@ -31,7 +31,7 @@ def upload():
     save_db(metadata, file.filename)
     save_file(blob, file.filename)
 
-    return 'Upload successful'
+    return Response('Upload successful', status=200)
 
 
 def verify_signature(blob, signature):
