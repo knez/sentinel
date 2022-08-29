@@ -5,6 +5,7 @@ import argparse
 import logging
 import requests
 import yaml
+import hashlib
 import datetime
 import time
 
@@ -39,17 +40,25 @@ def init_config():
             exit(1)
 
 
+def compute_sha256(file):
+    secret = config['dashboard']['secret_key']
+    blob = secret.encode() + file.read()
+    file.seek(0)
+    return hashlib.sha256(blob).hexdigest()
+
+
 # upload file to configured dashboard
 def send_file(save_name):
-    upload_url = config['dashboard']['url']
+    upload_url = config['dashboard']['url'] + '/api/upload'
     f = open(save_name, 'rb')
-    file = {'video_file': ('save_name', f)}
+    file = {'data': f}
+    header = {'Signature': compute_sha256(f)}
     try:
-        response = requests.post(upload_url, files=file)
+        response = requests.post(upload_url, files=file, headers=header)
         if response.status_code == 200:
             logging.debug(f'File {save_name} uploaded to {upload_url}')
         else:
-            logging.error('Wrong status code')
+            logging.error('Could not upload file: ' + response.content.decode())
     except requests.exceptions.ConnectionError as err:
         logging.error('Could not upload file')
     f.close()
