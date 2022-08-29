@@ -19,6 +19,7 @@ def upload():
         return Response('File is not signed', status=400)
 
     blob = file.read()
+    print(len(blob))
     if not verify_signature(blob, signature):
         return Response('Signature verification failed', status=403)
 
