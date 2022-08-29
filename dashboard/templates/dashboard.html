@@ -31,7 +31,7 @@
         <span class="date">{{ v.date }}</span>
         <span class="type">{{ v.kind }}</span>
         <span class="position">{{ v.position }}</span>
-        <span class="video"><button id="video-1" class="play">Play</button></span>
+        <span class="video"><button onclick="activateModal('mod{{ v.id }}')" class="play">Play</button></span>
         <span class="delete"><a href="#url" target="_blank">Delete</a></span>
       </li>
       {% endfor %}
@@ -39,19 +39,17 @@
   </li>
 </ul>
 
-<!-- The Modal -->
-<div id="myModal" class="modal">
-
-  <!-- Modal content -->
+{% for v in videos %}
+<div id="mod{{ v.id }}" class="modal">
   <div class="modal-content">
     <span class="close">&times;</span>
     <video width="540" height="480" controls>
-      <source src="3dsine.mp4" type="video/mp4">
+      <source src="/static/uploads/{{ v.filename }}" type="video/mp4">
       Your browser does not support the video tag.
     </video>
   </div>
-
 </div>
-{% endif %}
+{% endfor %}
 
+{% endif %}
 {% endblock %}
