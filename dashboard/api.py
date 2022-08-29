@@ -19,11 +19,7 @@ def upload():
         return 'Error: file is not signed'
 
     blob = file.read()
-    # verify signature
-    secret_key = current_app.config['SECRET_KEY'].encode()
-    sha256 = hashlib.sha256(secret_key + blob)
-    print(sha256.hexdigest())
-    if sha256.hexdigest() != signature:
+    if not verify_signature(blob, signature):
         return 'Error: signature verification failed'
 
     # search for magic number where metadata are stored
@@ -31,15 +27,26 @@ def upload():
     if ofs < 0:
         return 'Error: file has no metadata'
 
-    date, kind, loc = blob[ofs + 8:].decode().split(',')
-    filename = secure_filename(file.filename)
-    new_video = Video(date=date, kind=kind, position=loc, filename=filename)
+    metadata = blob[ofs + 8:].decode().split(',')
+    save_db(metadata, file.filename)
+    save_file(blob, file.filename)
+
+    return 'Upload successful'
+
+
+def verify_signature(blob, signature):
+    secret_key = current_app.config['SECRET_KEY'].encode()
+    sha256 = hashlib.sha256(secret_key + blob)
+    return sha256.hexdigest() == signature
+
+def save_db(metadata, filename,):
+    safe_name = secure_filename(filename)
+    date, kind, pos = metadata
+    new_video = Video(date=date, kind=kind, position=pos, filename=safe_name)
     db.session.add(new_video)
     db.session.commit()
 
-    # save the file
+def save_file(blob, filename):
     save_path = os.path.join(current_app.config['UPLOAD_FOLDER'], filename)
     with open(save_path, 'wb') as f:
         f.write(blob)
-
-    return 'Upload successful'
