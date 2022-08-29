@@ -15,25 +15,21 @@ def dashboard():
     videos = Video.query.all()
     return render_template('dashboard.html', videos=videos)
 
-@main.route('/dashboard/notifications')
-@login_required
-def notifications():
-    user = User.query.filter_by(name=current_user.name).first()
-    return render_template('notification.html', email=user.email, notify=user.notify)
 
-@main.route('/dashboard/notifications', methods=['POST'])
+@main.route('/dashboard/notifications', methods=['GET', 'POST'])
 @login_required
 def notifications_update():
-    enabled = request.form.get('enabled')
-    email = request.form.get('email')
-    # update user preferences
     user = User.query.filter_by(name=current_user.name).first()
-    user.email = email
-    user.notify = True if enabled else False
-    # save to database
-    db.session.add(user)
-    db.session.commit()
-    return redirect(url_for('main.notifications'))
+    if request.method == 'GET':
+        return render_template('notification.html', email=user.email, notify=user.notify)
+    else:
+        # POST request, update user preferences
+        user.email = request.form.get('email')
+        user.notify = True if request.form.get('enabled') else False
+        # save to database
+        db.session.add(user)
+        db.session.commit()
+        return redirect(url_for('main.notifications_update'))
 
 
 @main.route('/dashboard/delete/<int:id>')
