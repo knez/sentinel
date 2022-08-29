@@ -35,12 +35,7 @@ def notifications_update():
     return redirect(url_for('main.notifications'))
 
 
-# Define API endpoints
-@main.route('/api/delete')
-def delete():
-    # TODO
-    return ''
-
+# Define upload API endpoint
 @main.route('/api/upload', methods=['POST'])
 def upload():
     # TODO
