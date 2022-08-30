@@ -3,6 +3,7 @@ import cv2
 import numpy as np
 import argparse
 import logging
+import coloredlogs
 import requests
 import yaml
 import hashlib
@@ -11,6 +12,9 @@ import pathlib
 import datetime
 import time
 
+
+# enable colored logs
+coloredlogs.install(fmt='%(asctime)s %(levelname)s %(message)s')
 
 # init mobilenet SSD settings
 RESIZED_DIMENSIONS = (300, 300) # Dimensions that SSD was trained on. 
