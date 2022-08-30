@@ -6,6 +6,8 @@ import logging
 import requests
 import yaml
 import hashlib
+import tempfile
+import pathlib
 import datetime
 import time
 
@@ -56,7 +58,8 @@ def send_file(save_name):
     try:
         response = requests.post(upload_url, files=file, headers=header)
         if response.status_code == 200:
-            logging.debug(f'File {save_name} uploaded to {upload_url}')
+            name = pathlib.Path(save_name).name
+            logging.debug(f'File {name} uploaded to {upload_url}')
         else:
             logging.error('Could not upload file: ' + response.content.decode())
     except requests.exceptions.ConnectionError as err:
@@ -98,6 +101,7 @@ def embed_metadata(filename, meta):
 def create_save_name(cap):
     date_now = datetime.datetime.now().strftime('%Y%m%d-%H%M%S')
     save_name = 'video-' + date_now + '.mp4'
+    save_name = str(pathlib.Path(tempfile.gettempdir() + '/' + save_name))
     # get the video frame height and width
     frame_width = int(cap.get(3))
     frame_height = int(cap.get(4))
@@ -108,7 +112,6 @@ def create_save_name(cap):
         0x31637661, fps / 2,
         (frame_width, frame_height)
     )
-    logging.debug(f"Saving video footage into {save_name}")
     return save_name, out
 
 
@@ -202,7 +205,7 @@ def main_loop(cap):
                         embed_metadata(filename, metadata)
                         send_file(filename)
                         os.remove(filename)
-                        logging.debug(f'Deleting file {filename}')
+                        logging.debug(f'Deleting file {pathlib.Path(filename).name}')
 
                 if args['debug']:
                     cv2.imshow('SENTINEL', frame)
