@@ -1,3 +1,7 @@
 dashboard:
+    # url where videos will be uploaded to
     url: "http://127.0.0.1:5000"
+    # key used for authentication/signing
+    # must be exactly same as the one in the dashboard app
+    # requests are signed using this key and verified on the dashboard backend
     secret_key: "supersecretkey"
