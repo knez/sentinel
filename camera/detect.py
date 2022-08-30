@@ -105,7 +105,7 @@ def create_save_name(cap):
     # define codec and create VideoWriter object
     out = cv2.VideoWriter(
         save_name,
-        cv2.VideoWriter_fourcc(*'H264'), fps / 2,
+        0x31637661, fps / 2,
         (frame_width, frame_height)
     )
     logging.debug(f"Saving video footage into {save_name}")
