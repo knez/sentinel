@@ -14,7 +14,7 @@ import time
 
 
 # enable colored logs
-coloredlogs.install(fmt='%(asctime)s %(levelname)s %(message)s')
+coloredlogs.install(level='DEBUG', fmt='%(asctime)s %(levelname)s %(message)s')
 
 # init mobilenet SSD settings
 RESIZED_DIMENSIONS = (300, 300) # Dimensions that SSD was trained on. 
@@ -96,14 +96,15 @@ def embed_metadata(filename, meta):
     f = open(filename, 'ab')
     data = b'w00tw00t' + ','.join(meta).encode()
     if f.write(data) == len(data):
-        logging.debug('Embedded metadata into ' + filename)
+        file = pathlib.Path(filename).name
+        logging.debug('Embedded metadata into ' + file)
     else:
         logging.debug('Failed to embed data into ' + filename)
     f.close()
 
 
 def create_save_name(cap):
-    date_now = datetime.datetime.now().strftime('%Y%m%d-%H%M%S')
+    date_now = datetime.datetime.now().strftime('%H%M%S')
     save_name = 'video-' + date_now + '.mp4'
     save_name = str(pathlib.Path(tempfile.gettempdir() + '/' + save_name))
     # get the video frame height and width
