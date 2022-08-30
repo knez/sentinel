@@ -42,8 +42,8 @@ def verify_signature(blob, signature):
 
 def save_db(metadata, filename,):
     safe_name = secure_filename(filename)
-    date, kind, pos = metadata
-    new_video = Video(date=date, kind=kind, position=pos, filename=safe_name)
+    date, time, kind, pos = metadata
+    new_video = Video(date=date, time=time, kind=kind, position=pos, filename=safe_name)
     db.session.add(new_video)
     db.session.commit()
 

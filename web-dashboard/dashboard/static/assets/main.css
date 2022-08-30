@@ -155,6 +155,10 @@ ul > li > span.date {
   width: 140px;
 }
 
+ul > li > span.time {
+  width: 120px;
+}
+
 ul > li > span.type {
   width: 120px;
 }

@@ -191,8 +191,9 @@ def main_loop(cap):
                         # wait a little before detecting
                         if i == cap_frames - 25: 
                             kind = detect_kind(frame)
-                            time = datetime.datetime.now().strftime('%d.%m.%Y %H%M%S')
-                            metadata = (time, kind, location)
+                            date = datetime.datetime.now().strftime('%d.%m.%Y')
+                            time = datetime.datetime.now().strftime('%H:%M:%S')
+                            metadata = (date, time, kind, location)
                             logging.info(f"Detected new object: {kind}, location: {location}")
                     else:
                         is_capturing = False

@@ -20,6 +20,7 @@
       <li class="first">
         <span class="id">ID</span>
         <span class="date">Date</span>
+        <span class="time">Time</span>
         <span class="type">Type</span>
         <span class="position">Position</span>
         <span class="video">Video</span>
@@ -29,6 +30,7 @@
       <li class={{ '' if v.id % 2 == 0 else 'diff-row' }}>
         <span class="id">{{ v.id }} </span>
         <span class="date">{{ v.date }}</span>
+        <span class="time">{{ v.time }}</span>
         <span class="type">{{ v.kind }}</span>
         <span class="position">{{ v.position }}</span>
         <span class="video"><button onclick="activateModal('mod{{ v.id }}')" class="play">Play</button></span>
