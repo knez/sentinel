@@ -1,8 +1,10 @@
 import os
 import hashlib
 from flask import Blueprint, current_app, request, Response
+from flask_login import current_user
+from flask_mail import Mail, Message
 from werkzeug.utils import secure_filename
-from .models import Video
+from .models import User, Video
 from . import db
 
 api = Blueprint('api', __name__)
@@ -19,7 +21,6 @@ def upload():
         return Response('File is not signed', status=400)
 
     blob = file.read()
-    print(len(blob))
     if not verify_signature(blob, signature):
         return Response('Signature verification failed', status=403)
 
@@ -31,6 +32,9 @@ def upload():
     metadata = blob[ofs + 8:].decode().split(',')
     save_db(metadata, file.filename)
     save_file(blob, file.filename)
+
+    # send email notification if enabled
+    notify(metadata)
 
     return Response('Upload successful', status=200)
 
@@ -51,3 +55,13 @@ def save_file(blob, filename):
     save_path = os.path.join(current_app.config['UPLOAD_FOLDER'], filename)
     with open(save_path, 'wb') as f:
         f.write(blob)
+
+def notify(metadata):
+    date, time, kind, pos = metadata
+    user = User.query.get(1)
+    if user.notify:
+        mail = Mail(current_app)
+        msg = Message('Intruder detected!',  sender ='sentinel@localhost', recipients=[user.email])
+        msg.body = f"On {date} sentinel detected an object of type {kind} at location {pos}.\n"
+        msg.body += "For full video footage, visit http://localhost:8080"
+        mail.send(msg)

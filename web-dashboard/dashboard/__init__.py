@@ -15,6 +15,13 @@ def create_app():
     app.config['CACHE_TYPE'] = "null"
     app.config['UPLOAD_FOLDER'] = Path('dashboard/static/uploads')
 
+    app.config['MAIL_SERVER']='smtp.mailtrap.io'
+    app.config['MAIL_PORT'] = 2525
+    app.config['MAIL_USERNAME'] = '0769594f8b7bb4'
+    app.config['MAIL_PASSWORD'] = 'b534688f148f48'
+    app.config['MAIL_USE_TLS'] = True
+    app.config['MAIL_USE_SSL'] = False
+
     db.init_app(app)
 
     login_manager = LoginManager()
