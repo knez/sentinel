@@ -1,6 +1,7 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
+from pathlib import Path
 
 # init SQLAlchemy so we can use it later in our models
 db = SQLAlchemy()
@@ -12,7 +13,7 @@ def create_app():
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite'
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     app.config['CACHE_TYPE'] = "null"
-    app.config['UPLOAD_FOLDER'] = 'static/uploads'
+    app.config['UPLOAD_FOLDER'] = Path('dashboard/static/uploads')
 
     db.init_app(app)
 
