@@ -76,3 +76,6 @@ $ python run_webserver.py
 
 The dashboard can then be accessed at http://localhost:8080, using the default login credentials `admin:admin`
 
+## Troubleshooting
+
+In the event of the error message saying it can't find the OpenH264 library, put the bundled library `openh264-1.8.0-win64.dll` in the `C:\Windows\System32` folder.
