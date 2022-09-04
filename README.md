@@ -17,13 +17,13 @@ This module represents the main detection engine responsible for detecting motio
 
 ### Installation
 
-Create a new environment `venv` and activate it
+Create a new environment `venv-camera` and activate it
 
 ```bash
 $ cd camera
-$ python -m venv venv
-$ .\venv\Scripts\Activate.ps1
-# alternatively ./venv/bin/activate on Linux
+$ python -m venv venv-camera
+$ .\venv-camera\Scripts\Activate.ps1
+# alternatively ./venv-camera/bin/activate on Linux
 ```
 
 Install all required dependencies
@@ -32,7 +32,7 @@ Install all required dependencies
 $ pip install -r requirements.txt
 ```
 
-Optionally, configure the `settings.yaml` file
+Optionally, configure the `settings.yaml` file to your liking
 
 Run the module
 
@@ -40,18 +40,26 @@ Run the module
 $ python detect.py
 ```
 
+or alternatively 
+
+```
+python detect.py --debug
+```
+
+if you want to see the camera window and more verbose logging
+
 ## Web-dashboard module
 
 Web dashboard is a single-user webapp where user can manage video footages, see associated metadata, and replay/delete videos. It also allows one to enable/disable the additional email notification alert.
 
 ### Installation 
 
-Create new environment and activate it
+In a separate terminal window, create a new environment and activate it
 
 ```bash
 $ cd web-dashboard
-$ python -m venv venv
-$ .\venv\Scripts\Activate.ps1
+$ python -m venv venv-dashboard
+$ .\venv-dashboard\Scripts\Activate.ps1
 ```
 
 Install all required dependencies
@@ -66,5 +74,5 @@ Run the dashboard
 $ python run_webserver.py
 ```
 
-The dashboard can then be accessed by default at http://localhost:8080, using the default login credentials `admin:admin`
+The dashboard can then be accessed at http://localhost:8080, using the default login credentials `admin:admin`
 
