@@ -66,5 +66,5 @@ Run the dashboard
 $ python run_webserver.py
 ```
 
-The dashboard can then be accessed by default at http://localhost:5000, using the default login credentials `admin:admin`
+The dashboard can then be accessed by default at http://localhost:8080, using the default login credentials `admin:admin`
 
